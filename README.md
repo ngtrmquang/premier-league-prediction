@@ -74,6 +74,42 @@ The model's predictions are far less spread out than real scores:
 > Results like 5-0 or 4-2 are never produced.
 
 
+## Predicted 2026/27 table (V1)
+
+Output of `03_predict_final.ipynb` (one deterministic run, scores rounded to integers):
+
+| # | Team | Points | Goals |
+|--:|---|--:|--:|
+| 1 | Man City | 110 | 80 |
+| 2 | Chelsea | 91 | 70 |
+| 3 | Arsenal | 84 | 64 |
+| 4 | Liverpool | 84 | 66 |
+| 5 | Tottenham | 82 | 61 |
+| 6 | Man United | 66 | 59 |
+| 7 | Brentford | 62 | 58 |
+| 8 | Brighton | 48 | 56 |
+| 9 | Newcastle | 37 | 45 |
+| 10 | Leeds | 31 | 40 |
+| 11 | Everton | 30 | 39 |
+| 12 | Hull | 30 | 39 |
+| 13 | Nott'm Forest | 30 | 38 |
+| 14 | Fulham | 28 | 39 |
+| 15 | Sunderland | 28 | 39 |
+| 16 | Aston Villa | 26 | 37 |
+| 17 | Crystal Palace | 26 | 39 |
+| 18 | Coventry | 25 | 34 |
+| 19 | Bournemouth | 24 | 39 |
+| 20 | Ipswich | 24 | 40 |
+
+
+**Reading this table:** it is a pipeline output, not a forecast.
+
+- **Too extreme.** Man City on 110 points would beat the all-time Premier League record (100). Meanwhile the 9th-placed team has only 37 points and 12 teams finish on 31 or fewer.
+- **Too many draws.** The points total (966) implies about 174 draws out of 380 matches (~46%), versus roughly a quarter in real seasons. This follows directly from rounding expected goals to 1-1 / 2-2 scorelines.
+- **Self-reinforcing form.** Because every simulated result is deterministic, a team that wins early gets a higher `points_avg_last_5`, which makes the model predict more wins, and the gap widens over the season. A single run also hides all uncertainty.
+- **Tottenham not relegated** Unrealistic
+
+
 ## Roadmap (V2 ideas)
 
 - Poisson objective (or Dixon-Coles style model) and sampling scorelines instead of rounding
@@ -84,8 +120,6 @@ The model's predictions are far less spread out than real scores:
 - Use real results for matchdays already played in 2026/27 and simulate only the rest
 - Probabilistic evaluation (log-loss / RPS) against simple baselines
 - Add LaLiga
-
-
 ## Running the notebooks
 
 Run them in order, `00 → 03`. Before running, replace the hard-coded local paths (`C:\Users\...`) with your own.
